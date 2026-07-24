@@ -14,46 +14,46 @@ export const ReceiptTemplate = ({ entry, settings }) => {
   return (
     <div
       id="printable-receipt-area"
-      className="p-3 bg-white text-gray-900 border-2 border-gray-800 rounded max-w-[320px] w-full mx-auto shadow-md font-sans text-xs relative"
+      className="px-5 py-3.5 bg-white text-gray-900 border-2 border-gray-800 rounded max-w-[270px] w-full mx-auto shadow-md font-sans text-xs relative overflow-hidden box-border"
       style={{ fontFamily: "var(--font-family)" }}
     >
       {/* Header */}
       <div className="text-center border-b border-dashed border-gray-400 pb-2 mb-2">
-        <div className="text-[#7A001E] font-black text-xs sm:text-sm uppercase tracking-tight break-words leading-tight">
+        <div className="text-[#7A001E] font-black text-xs uppercase tracking-tight break-words leading-tight px-1">
           {settings.marriageTitle || 'சுப மொய் விருந்து'}
         </div>
         {host1 && (
-          <div className="text-[11px] font-bold text-gray-800 mt-0.5 break-words">
+          <div className="text-[10px] font-bold text-gray-800 mt-0.5 break-words">
             {host1}{host2 ? ` & ${host2}` : ''}
           </div>
         )}
         {settings.venue && (
-          <div className="text-[10px] text-gray-600 font-medium mt-0.5 break-words">
+          <div className="text-[9px] text-gray-600 font-medium mt-0.5 break-words">
             இடம்: {settings.venue}
           </div>
         )}
       </div>
 
       {/* Receipt Info */}
-      <div className="flex justify-between items-center text-[10px] font-mono border-b border-dashed border-gray-400 pb-1.5 mb-2 text-gray-700">
-        <div>
+      <div className="flex justify-between items-center text-[9.5px] font-mono border-b border-dashed border-gray-400 pb-1.5 mb-2 text-gray-700 gap-1">
+        <div className="flex-shrink-0">
           <span className="font-bold"># {entry.receiptNo}</span>
         </div>
-        <div className="text-right">
+        <div className="text-right text-[8.5px] font-mono">
           <span>{formatDisplayDate(entry.date)} {entry.time}</span>
         </div>
       </div>
 
       {/* Guest Details */}
-      <div className="space-y-1.5 text-[11px] border-b border-dashed border-gray-400 pb-2 mb-2">
+      <div className="space-y-1.5 text-[10.5px] border-b border-dashed border-gray-400 pb-2 mb-2">
         <div className="flex justify-between items-start gap-1">
           <span className="font-semibold text-gray-600 flex-shrink-0">பெயர் (Guest):</span>
-          <span className="font-extrabold text-gray-900 text-right">{entry.name}</span>
+          <span className="font-extrabold text-gray-900 text-right break-words max-w-[125px]">{entry.name}</span>
         </div>
 
         <div className="flex justify-between items-start gap-1">
           <span className="font-semibold text-gray-600 flex-shrink-0">ஊர் (Address):</span>
-          <span className="font-bold text-gray-800 text-right">{entry.address}</span>
+          <span className="font-bold text-gray-800 text-right break-words max-w-[125px]">{entry.address}</span>
         </div>
 
         {entry.mobile && (
@@ -66,7 +66,7 @@ export const ReceiptTemplate = ({ entry, settings }) => {
         {entry.remarks && (
           <div className="flex justify-between items-center text-[10px]">
             <span className="font-semibold text-gray-600">Remarks:</span>
-            <span className="font-medium text-gray-700">{entry.remarks}</span>
+            <span className="font-medium text-gray-700 break-words max-w-[120px] text-right">{entry.remarks}</span>
           </div>
         )}
       </div>
@@ -76,20 +76,20 @@ export const ReceiptTemplate = ({ entry, settings }) => {
         <div className="text-[9px] font-bold uppercase tracking-wider text-yellow-200">
           MOI AMOUNT (மொய் தொகை)
         </div>
-        <div className="text-xl font-black font-mono tracking-tight text-yellow-300 mt-0.5">
+        <div className="text-lg font-black font-mono tracking-tight text-yellow-300 mt-0.5">
           {formatIndianCurrency(entry.amount)}
         </div>
-        <div className="text-[9px] italic text-gray-200 mt-0.5">
+        <div className="text-[8.5px] italic text-gray-200 mt-0.5 break-words">
           ({numberToWords(entry.amount)})
         </div>
       </div>
 
       {/* Footer */}
-      <div className="text-center text-[10px] text-gray-600 pt-1">
-        <p className="font-bold text-[#7A001E]">{settings.printFooter || 'நன்றி! தங்களின் வருகைக்கு எங்கள் நன்றிகள்!'}</p>
+      <div className="text-center text-[9.5px] text-gray-600 pt-0.5">
+        <p className="font-bold text-[#7A001E] leading-tight break-words">{settings.printFooter || 'நன்றி! தங்களின் வருகைக்கு எங்கள் நன்றிகள்!'}</p>
         <div className="mt-2 flex justify-between items-center text-[8px] text-gray-400 font-mono">
           <span>POS Receipt</span>
-          <span>Sig: ____________</span>
+          <span>Sig: _______</span>
         </div>
       </div>
     </div>

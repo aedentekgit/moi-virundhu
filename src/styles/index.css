@@ -165,13 +165,14 @@ kbd {
     position: absolute !important;
     left: 0 !important;
     top: 0 !important;
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 68mm !important;
+    max-width: 68mm !important;
     margin: 0 !important;
-    padding: 2mm 3mm !important;
+    padding: 3mm 4.5mm !important;
     box-shadow: none !important;
     box-sizing: border-box !important;
     border-radius: 0 !important;
+    overflow: hidden !important;
   }
 }
 
