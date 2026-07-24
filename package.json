@@ -5,6 +5,7 @@
   "type": "module",
 
   "scripts": {
+    "start": "node server/server.js",
     "dev": "concurrently \"npm run server\" \"vite --host --port 3000\"",
     "server": "npm run dev --prefix server",
     "server:start": "npm start --prefix server",
