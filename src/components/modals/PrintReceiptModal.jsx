@@ -6,10 +6,20 @@ import { X, Printer } from 'lucide-react';
 export const PrintReceiptModal = () => {
   const { printModalEntry, setPrintModalEntry, settings } = useMoi();
 
+  const triggerPrint = () => {
+    const originalTitle = document.title;
+    try {
+      document.title = '';
+      window.print();
+    } finally {
+      document.title = originalTitle;
+    }
+  };
+
   useEffect(() => {
     if (printModalEntry) {
       const timer = setTimeout(() => {
-        window.print();
+        triggerPrint();
         setPrintModalEntry(null);
       }, 400);
       return () => clearTimeout(timer);
@@ -19,7 +29,7 @@ export const PrintReceiptModal = () => {
   if (!printModalEntry) return null;
 
   const handlePrint = () => {
-    window.print();
+    triggerPrint();
   };
 
   return (

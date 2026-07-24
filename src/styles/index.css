@@ -128,11 +128,20 @@ kbd {
   animation: highlightNewRow 2s ease-out;
 }
 
-/* Print Only Styles */
+/* Print Only Styles - Completely remove browser headers (title, date) and footers (URL, page numbers) */
 @media print {
   @page {
-    margin: 0mm !important;
+    margin: 0 !important;
     size: auto;
+  }
+  @page :first {
+    margin: 0 !important;
+  }
+  @page :left {
+    margin: 0 !important;
+  }
+  @page :right {
+    margin: 0 !important;
   }
 
   html, body {
@@ -157,7 +166,7 @@ kbd {
     top: 0 !important;
     width: 100% !important;
     margin: 0 !important;
-    padding: 15px !important;
+    padding: 10px !important;
     box-shadow: none !important;
   }
 }
