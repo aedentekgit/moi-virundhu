@@ -3,9 +3,14 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import pool, { initializeDatabase } from './db.js';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '.env') });
 dotenv.config();
+
+import pool, { initializeDatabase } from './db.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -13,15 +18,42 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // Initialize DB and tables on start
 try {
   await initializeDatabase();
 } catch (err) {
   console.error('CRITICAL: Database initialization failed. Server starting anyway...', err);
 }
+
+// Safe Date formatting helper for MySQL DATETIME
+function formatCreatedAt(createdAt) {
+  try {
+    if (!createdAt) return new Date().toISOString().slice(0, 19).replace('T', ' ');
+    const d = new Date(createdAt);
+    if (isNaN(d.getTime())) return new Date().toISOString().slice(0, 19).replace('T', ' ');
+    return d.toISOString().slice(0, 19).replace('T', ' ');
+  } catch {
+    return new Date().toISOString().slice(0, 19).replace('T', ' ');
+  }
+}
+
+// -------------------------------------------------------------
+// 0. HEALTH CHECK API
+// -------------------------------------------------------------
+app.get('/api/health', async (req, res) => {
+  try {
+    await pool.query('SELECT 1');
+    res.json({ status: 'ok', dbConnected: true, timestamp: new Date().toISOString() });
+  } catch (error) {
+    console.error('Database connection error in /api/health:', error);
+    res.status(500).json({
+      status: 'error',
+      dbConnected: false,
+      error: error.message,
+      code: error.code || 'DB_ERROR'
+    });
+  }
+});
 
 // -------------------------------------------------------------
 // 1. ENTRIES API
@@ -34,7 +66,7 @@ app.get('/api/entries', async (req, res) => {
     res.json(rows);
   } catch (error) {
     console.error('Error fetching entries:', error);
-    res.status(500).json({ error: 'Failed to fetch entries' });
+    res.status(500).json({ error: 'Failed to fetch entries', details: error.message, code: error.code });
   }
 });
 
@@ -47,13 +79,7 @@ app.post('/api/entries', async (req, res) => {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
     
-    // Format createdAt for MySQL
-    let mysqlCreatedAt = createdAt;
-    if (createdAt) {
-      mysqlCreatedAt = new Date(createdAt).toISOString().slice(0, 19).replace('T', ' ');
-    } else {
-      mysqlCreatedAt = new Date().toISOString().slice(0, 19).replace('T', ' ');
-    }
+    const mysqlCreatedAt = formatCreatedAt(createdAt);
 
     await pool.query(query, [
       id,
@@ -70,7 +96,7 @@ app.post('/api/entries', async (req, res) => {
     res.status(201).json({ success: true, message: 'Entry added successfully' });
   } catch (error) {
     console.error('Error inserting entry:', error);
-    res.status(500).json({ error: 'Failed to insert entry' });
+    res.status(500).json({ error: 'Failed to insert entry', details: error.message, code: error.code });
   }
 });
 

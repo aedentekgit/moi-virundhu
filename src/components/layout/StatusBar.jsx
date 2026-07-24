@@ -4,7 +4,7 @@ import { formatAmountOrMask } from '../../utils/currencyFormatter';
 import { CheckCircle2, RotateCcw, Database } from 'lucide-react';
 
 export const StatusBar = () => {
-  const { analytics, lastDeletedEntry, undoDelete, isAmountHidden } = useMoi();
+  const { analytics, lastDeletedEntry, undoDelete, isAmountHidden, dbStatus, dbError } = useMoi();
 
   return (
     <footer className="bg-slate-900 text-slate-300 text-xs px-4 py-1.5 flex flex-wrap items-center justify-between border-t border-slate-800 select-none z-10">
@@ -15,10 +15,23 @@ export const StatusBar = () => {
           SYSTEM READY
         </span>
         <span className="h-3 w-px bg-slate-700"></span>
-        <span className="flex items-center gap-1 text-slate-400 text-[11px]">
-          <Database size={13} className="text-amber-400" />
-          Auto-Saved Local DB
-        </span>
+        
+        {dbStatus === 'connected' ? (
+          <span className="flex items-center gap-1 text-emerald-400 text-[11px] font-medium" title="Successfully connected & saving to MySQL Database">
+            <Database size={13} className="text-emerald-400" />
+            MySQL DB Synced
+          </span>
+        ) : dbStatus === 'error' ? (
+          <span className="flex items-center gap-1 text-amber-400 text-[11px] font-medium" title={`MySQL Error: ${dbError || 'Not connected'}. Data is saved locally.`}>
+            <Database size={13} className="text-amber-500 animate-pulse" />
+            MySQL Off (Local Saved)
+          </span>
+        ) : (
+          <span className="flex items-center gap-1 text-slate-400 text-[11px]">
+            <Database size={13} className="text-slate-400" />
+            Checking DB...
+          </span>
+        )}
         
         {lastDeletedEntry && (
           <button

@@ -38,16 +38,43 @@ export const MoiProvider = ({ children }) => {
   const [filterPeriod, setFilterPeriod] = useState('all');
   const [customDate, setCustomDate] = useState('');
 
+  const [dbStatus, setDbStatus] = useState('checking'); // 'connected', 'error', 'checking'
+  const [dbError, setDbError] = useState(null);
+
   const isInitialMount = useRef(true);
 
-  // Load initial data from Backend APIs on mount
+  // Check DB health and load initial data from Backend APIs on mount
   useEffect(() => {
     const initFetch = async () => {
+      try {
+        const resHealth = await fetch(`${API_BASE}/api/health`);
+        if (resHealth.ok) {
+          const healthData = await resHealth.json();
+          if (healthData.dbConnected) {
+            setDbStatus('connected');
+            setDbError(null);
+          } else {
+            setDbStatus('error');
+            setDbError(healthData.error || 'Database connection error');
+          }
+        } else {
+          const healthErr = await resHealth.json().catch(() => ({}));
+          setDbStatus('error');
+          setDbError(healthErr.error || `Server error (HTTP ${resHealth.status})`);
+        }
+      } catch (err) {
+        console.warn('Backend server un-reachable or offline:', err);
+        setDbStatus('error');
+        setDbError('Backend server un-reachable');
+      }
+
       try {
         const resEntries = await fetch(`${API_BASE}/api/entries`);
         if (resEntries.ok) {
           const data = await resEntries.json();
-          setEntries(data);
+          if (Array.isArray(data)) {
+            setEntries(data);
+          }
         }
       } catch (err) {
         console.error('Failed to fetch entries, falling back to LocalStorage', err);
@@ -58,7 +85,9 @@ export const MoiProvider = ({ children }) => {
         const resSettings = await fetch(`${API_BASE}/api/settings`);
         if (resSettings.ok) {
           const data = await resSettings.json();
-          setSettings(data);
+          if (data && !data.error) {
+            setSettings(data);
+          }
         }
       } catch (err) {
         console.error('Failed to fetch settings, falling back to LocalStorage', err);
@@ -69,7 +98,9 @@ export const MoiProvider = ({ children }) => {
         const resPrinter = await fetch(`${API_BASE}/api/printer-settings`);
         if (resPrinter.ok) {
           const data = await resPrinter.json();
-          setPrinterSettings(data);
+          if (data && !data.error) {
+            setPrinterSettings(data);
+          }
         }
       } catch (err) {
         console.error('Failed to fetch printer settings, falling back to LocalStorage', err);
@@ -150,7 +181,23 @@ export const MoiProvider = ({ children }) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newEntry)
-    }).catch(err => console.error('Error saving entry to backend:', err));
+    })
+    .then(async (res) => {
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        console.error('Error saving entry to backend DB:', errJson);
+        setDbStatus('error');
+        setDbError(errJson.details || errJson.error || `HTTP ${res.status}`);
+      } else {
+        setDbStatus('connected');
+        setDbError(null);
+      }
+    })
+    .catch(err => {
+      console.error('Error saving entry to backend:', err);
+      setDbStatus('error');
+      setDbError('Network connection failed');
+    });
 
     // Update settings (receiptNextNum) on client & server
     const updatedSettings = {
@@ -330,6 +377,8 @@ export const MoiProvider = ({ children }) => {
   return (
     <MoiContext.Provider
       value={{
+        dbStatus,
+        dbError,
         entries,
         filteredEntries,
         settings,
