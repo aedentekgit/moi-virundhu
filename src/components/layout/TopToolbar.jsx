@@ -139,20 +139,6 @@ export const TopToolbar = ({ activeTab, setActiveTab }) => {
 
           <div className="h-5 w-px bg-yellow-500/30"></div>
 
-          {/* PRINTER HARDWARE SETUP BUTTON (Below / inside top metric box) */}
-          <button
-            onClick={() => setIsPrinterModalOpen(true)}
-            title="Configure Printer Type, Name & IP Address"
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-yellow-500/20 hover:bg-yellow-500/40 text-yellow-300 border border-yellow-500/40 text-xs font-semibold transition-all cursor-pointer shadow-sm"
-          >
-            <Printer size={15} className="text-yellow-400" />
-            <span className="hidden xl:inline">
-              {printerSettings.printerType === 'network'
-                ? `IP: ${printerSettings.ipAddress}`
-                : printerSettings.printerName.split(' ')[0]}
-            </span>
-          </button>
-
           {/* SET STARTING RECEIPT NUMBER BUTTON */}
           <button
             onClick={() => setIsReceiptNoModalOpen(true)}
@@ -210,14 +196,6 @@ export const TopToolbar = ({ activeTab, setActiveTab }) => {
           >
             <Hash size={15} />
             <span className="text-[11px]">{settings.receiptPrefix}{String(settings.receiptNextNum || 101).padStart(4, '0')}</span>
-          </button>
-
-          <button
-            onClick={() => setIsPrinterModalOpen(true)}
-            title="Printer & IP Setup"
-            className="p-1.5 md:p-2 rounded-lg bg-maroon-900/60 hover:bg-yellow-500 hover:text-maroon-950 text-yellow-200 border border-yellow-500/30 transition-all"
-          >
-            <Printer size={16} />
           </button>
 
           <button
