@@ -9,9 +9,9 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '.env') });
 dotenv.config();
 
-let dbHost = process.env.DB_HOST || 'srv1639.hstgr.io';
-if (dbHost.includes('auth-db')) {
-  dbHost = 'srv1639.hstgr.io';
+let dbHost = process.env.DB_HOST || '193.203.184.143';
+if (!dbHost || dbHost.includes('auth-db') || dbHost === 'srv1639.hstgr.io') {
+  dbHost = '193.203.184.143';
 }
 
 const poolConfig = {
