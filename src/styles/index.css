@@ -1,0 +1,161 @@
+/* Define AppNumbers font-face mapping digits/currency symbols to Manrope */
+@font-face {
+  font-family: 'AppNumbers';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('Manrope Light'), local('Manrope-Light'), local('Manrope'), url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk6jFO_F.ttf) format('truetype');
+  unicode-range: U+30-39, U+2C, U+2E, U+20B9, U+2B, U+2D, U+25;
+}
+@font-face {
+  font-family: 'AppNumbers';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Manrope Regular'), local('Manrope-Regular'), local('Manrope'), url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk79FO_F.ttf) format('truetype');
+  unicode-range: U+30-39, U+2C, U+2E, U+20B9, U+2B, U+2D, U+25;
+}
+@font-face {
+  font-family: 'AppNumbers';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local('Manrope Medium'), local('Manrope-Medium'), local('Manrope'), url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk7PFO_F.ttf) format('truetype');
+  unicode-range: U+30-39, U+2C, U+2E, U+20B9, U+2B, U+2D, U+25;
+}
+@font-face {
+  font-family: 'AppNumbers';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Manrope SemiBold'), local('Manrope-SemiBold'), local('Manrope'), url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4jE-_F.ttf) format('truetype');
+  unicode-range: U+30-39, U+2C, U+2E, U+20B9, U+2B, U+2D, U+25;
+}
+@font-face {
+  font-family: 'AppNumbers';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Manrope Bold'), local('Manrope-Bold'), local('Manrope'), url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk4aE-_F.ttf) format('truetype');
+  unicode-range: U+30-39, U+2C, U+2E, U+20B9, U+2B, U+2D, U+25;
+}
+@font-face {
+  font-family: 'AppNumbers';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local('Manrope ExtraBold'), local('Manrope-ExtraBold'), local('Manrope'), url(https://fonts.gstatic.com/s/manrope/v20/xn7_YHE41ni1AdIRqAuZuw1Bx9mbZk59E-_F.ttf) format('truetype');
+  unicode-range: U+30-39, U+2C, U+2E, U+20B9, U+2B, U+2D, U+25;
+}
+
+:root {
+  --color-maroon-primary: #7A001E;
+  --color-maroon-dark: #560015;
+  --color-gold-primary: #D4AF37;
+  --font-family: 'AppNumbers', 'Poppins', 'Mukta Malar', sans-serif;
+}
+
+[data-theme='dark'] {
+  --color-maroon-primary: #9B0027;
+  --color-maroon-dark: #3A000E;
+  --color-gold-primary: #E5C158;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  overflow: hidden;
+}
+
+/* Custom Scrollbar for Desktop Software Feel */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #7A001E;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #560015;
+}
+
+/* Kbd badge style */
+kbd {
+  background-color: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+  color: #334155;
+  display: inline-block;
+  font-family: monospace;
+  font-size: 0.75rem;
+  font-weight: 400;
+  padding: 2px 6px;
+  line-height: 1;
+}
+
+[data-theme='dark'] kbd {
+  background-color: #334155;
+  border-color: #475569;
+  color: #F8FAFC;
+}
+
+/* Row Highlight Animation on Insert */
+@keyframes highlightNewRow {
+  0% {
+    background-color: #FEF3C7;
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.row-new {
+  animation: highlightNewRow 2s ease-out;
+}
+
+/* Print Only Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-receipt-area, #printable-receipt-area * {
+    visibility: visible;
+  }
+  #printable-receipt-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  @page {
+    size: A5 portrait;
+    margin: 10mm;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tamil Nadu Marriage Moi Collection Software</title>
+    <!-- Google Fonts: Poppins, Mukta Malar & Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Mukta+Malar:wght@400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN Engine -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: ['selector', '[data-theme="dark"]'],
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['AppNumbers', 'Poppins', 'Mukta Malar', 'sans-serif'],
+              mono: ['AppNumbers', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'Liberation Mono', 'Courier New', 'monospace'],
+              serif: ['AppNumbers', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'Times', 'serif'],
+            },
+            colors: {
+              maroon: {
+                50: '#FFF0F3',
+                100: '#FFE1E7',
+                800: '#560015',
+                900: '#7A001E',
+                950: '#3A000E',
+              },
+              gold: {
+                100: '#FDF8E7',
+                400: '#E5C158',
+                500: '#D4AF37',
+                600: '#B89628',
+              }
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="bg-gray-100 text-gray-900 selection:bg-[#7A001E] selection:text-white antialiased font-sans">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
