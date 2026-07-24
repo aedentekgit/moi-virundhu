@@ -9,11 +9,16 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '.env') });
 dotenv.config();
 
+let dbHost = process.env.DB_HOST || 'srv1639.hstgr.io';
+if (dbHost.includes('auth-db')) {
+  dbHost = 'srv1639.hstgr.io';
+}
+
 const poolConfig = {
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+  host: dbHost,
+  user: process.env.DB_USER || 'u745362362_moivirunthu',
+  password: process.env.DB_PASSWORD || 'Aedentek@123',
+  database: process.env.DB_NAME || 'u745362362_moivirunthu',
   port: process.env.DB_PORT ? Number(process.env.DB_PORT) : 3306,
   waitForConnections: true,
   connectionLimit: 10,
