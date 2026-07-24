@@ -34,12 +34,12 @@ export const PrintReceiptModal = () => {
 
   return (
     <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="bg-white dark:bg-slate-800 rounded-lg shadow-2xl border-2 border-[#7A001E] w-full max-w-xl max-h-[90vh] flex flex-col overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-lg shadow-2xl border-2 border-[#7A001E] w-full max-w-md max-h-[90vh] flex flex-col overflow-hidden">
         {/* Header */}
         <div className="bg-[#7A001E] text-white px-4 py-3 flex items-center justify-between flex-shrink-0">
           <h3 className="font-extrabold text-sm text-yellow-300 flex items-center gap-2">
             <Printer size={16} />
-            PRINT MOI RECEIPT PREVIEW
+            PRINT MOI RECEIPT (ATM / POS SLIP)
           </h3>
           <button
             onClick={() => setPrintModalEntry(null)}
@@ -50,14 +50,14 @@ export const PrintReceiptModal = () => {
         </div>
 
         {/* Scrollable Printable Receipt Content */}
-        <div className="p-6 overflow-y-auto flex-1 bg-gray-100 dark:bg-slate-900 flex justify-center items-center">
+        <div className="p-4 overflow-y-auto flex-1 bg-gray-100 dark:bg-slate-900 flex justify-center items-center">
           <ReceiptTemplate entry={printModalEntry} settings={settings} />
         </div>
 
         {/* Footer Action Buttons */}
-        <div className="bg-gray-200 dark:bg-slate-800 px-4 py-3 border-t border-gray-300 dark:border-slate-700 flex justify-between items-center flex-shrink-0">
-          <span className="text-xs font-semibold text-gray-600 dark:text-gray-400">
-            Receipt Size: A5 Portrait / Thermal POS
+        <div className="bg-gray-200 dark:bg-slate-800 px-4 py-2.5 border-t border-gray-300 dark:border-slate-700 flex justify-between items-center flex-shrink-0 text-xs">
+          <span className="font-semibold text-gray-600 dark:text-gray-400 text-[11px]">
+            Size: 80mm POS Slip / ATM Format
           </span>
           <div className="flex gap-2">
             <button
