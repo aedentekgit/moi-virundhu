@@ -161,13 +161,15 @@ kbd {
   }
 
   #printable-receipt-area {
-    position: absolute !important;
+    position: relative !important;
     left: 0 !important;
     top: 0 !important;
     width: 100% !important;
-    margin: 0 !important;
-    padding: 10px !important;
+    max-width: 250px !important;
+    margin: 0 auto !important;
+    padding: 4px !important;
     box-shadow: none !important;
+    box-sizing: border-box !important;
   }
 }
 
