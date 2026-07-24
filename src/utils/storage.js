@@ -61,9 +61,9 @@ export const FUNCTION_TYPES = [
 
 export const defaultPrinterSettings = {
   printerType: 'thermal80', // 'standard', 'thermal80', 'thermal58', 'network'
-  printerName: 'TVS RP3160 Gold Thermal POS',
-  ipAddress: '192.168.1.200',
-  port: '9100',
+  printerName: 'Default System Connected Printer',
+  ipAddress: '',
+  port: '',
   autoPrintOnSave: true,
   paperWidth: '80mm',
   status: 'Ready (Connected)'
@@ -151,7 +151,13 @@ export const loadPrinterSettingsFromStorage = () => {
       localStorage.setItem(STORAGE_KEYS.PRINTER, JSON.stringify(defaultPrinterSettings));
       return defaultPrinterSettings;
     }
-    return { ...defaultPrinterSettings, ...JSON.parse(data) };
+    const parsed = JSON.parse(data);
+    if (parsed.printerName && (parsed.printerName.includes('TVS RP3160') || parsed.printerName.includes('Epson TM-T88VI'))) {
+      parsed.printerName = 'Default System Connected Printer';
+      parsed.ipAddress = '';
+      parsed.port = '';
+    }
+    return { ...defaultPrinterSettings, ...parsed };
   } catch (err) {
     return defaultPrinterSettings;
   }

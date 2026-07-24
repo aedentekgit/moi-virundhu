@@ -97,19 +97,16 @@ export const PrinterConfigModal = () => {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="block font-bold text-gray-700 dark:text-gray-300 mb-1">
-                Available Printer Model / Name
+                Connected Printer Name
               </label>
-              <select
-                value={formData.printerName}
+              <input
+                type="text"
+                placeholder="Default System Connected Printer"
+                value={formData.printerName || ''}
                 onChange={(e) => setFormData({ ...formData, printerName: e.target.value })}
                 className="w-full px-2.5 py-1.5 font-bold border border-gray-300 dark:border-slate-700 rounded bg-white dark:bg-slate-900 dark:text-white"
-              >
-                <option value="TVS RP3160 Gold Thermal POS">TVS RP3160 Gold Thermal POS</option>
-                <option value="Epson TM-T88VI POS Printer">Epson TM-T88VI Thermal POS</option>
-                <option value="HPRT TP806 Network POS Printer">HPRT TP806 LAN Thermal Printer</option>
-                <option value="Rongta RP326 Thermal Printer">Rongta RP326 80mm POS</option>
-                <option value="Standard Windows System Printer (A5)">Standard System Printer (A5/A4)</option>
-              </select>
+              />
+              <p className="text-[10px] text-gray-500 mt-0.5">Auto-detects your connected printer</p>
             </div>
 
             <div>
@@ -142,8 +139,8 @@ export const PrinterConfigModal = () => {
                   </label>
                   <input
                     type="text"
-                    placeholder="192.168.1.200"
-                    value={formData.ipAddress}
+                    placeholder="e.g. 192.168.1.50"
+                    value={formData.ipAddress || ''}
                     onChange={(e) => setFormData({ ...formData, ipAddress: e.target.value })}
                     className="w-full px-2.5 py-1 font-mono font-bold border border-gray-300 dark:border-slate-700 rounded dark:bg-slate-800 dark:text-white"
                   />
@@ -155,7 +152,7 @@ export const PrinterConfigModal = () => {
                   <input
                     type="text"
                     placeholder="9100"
-                    value={formData.port}
+                    value={formData.port || ''}
                     onChange={(e) => setFormData({ ...formData, port: e.target.value })}
                     className="w-full px-2.5 py-1 font-mono font-bold border border-gray-300 dark:border-slate-700 rounded dark:bg-slate-800 dark:text-white"
                   />

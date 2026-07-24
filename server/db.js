@@ -108,7 +108,13 @@ export async function initializeDatabase() {
     if (printerRows.length === 0) {
       await connection.query(`
         INSERT INTO printer_settings (id, printerType, printerName, ipAddress, port, autoPrintOnSave, paperWidth, status)
-        VALUES (1, 'thermal80', 'TVS RP3160 Gold Thermal POS', '192.168.1.200', '9100', 1, '80mm', 'Ready (Connected)')
+        VALUES (1, 'thermal80', 'Default System Connected Printer', '', '', 1, '80mm', 'Ready (Connected)')
+      `);
+    } else {
+      await connection.query(`
+        UPDATE printer_settings 
+        SET printerName = 'Default System Connected Printer', ipAddress = '', port = '' 
+        WHERE id = 1 AND (printerName LIKE '%TVS RP3160%' OR printerName LIKE '%Epson%')
       `);
     }
 
